@@ -582,20 +582,12 @@ body.theme-cyan .tool-tag { background-color: rgba(0, 255, 255, 0.1); }
     background-size: cover;
     background-position: center;
     border-bottom: 1px solid var(--border-color);
-    filter: grayscale(80%) sepia(100%) hue-rotate(80deg) saturate(300%) contrast(1.5);
     transition: filter 0.3s ease;
 }
 
 .blog-card:hover .blog-image {
     filter: none;
 }
-
-body.theme-blue .blog-image { filter: grayscale(80%) sepia(100%) hue-rotate(180deg) saturate(300%) contrast(1.5); }
-body.theme-red .blog-image { filter: grayscale(80%) sepia(100%) hue-rotate(330deg) saturate(300%) contrast(1.5); }
-body.theme-purple .blog-image { filter: grayscale(80%) sepia(100%) hue-rotate(260deg) saturate(300%) contrast(1.5); }
-body.theme-yellow .blog-image { filter: grayscale(80%) sepia(100%) hue-rotate(40deg) saturate(300%) contrast(1.5); }
-body.theme-cyan .blog-image { filter: grayscale(80%) sepia(100%) hue-rotate(150deg) saturate(300%) contrast(1.5); }
-body.theme-orange .blog-image { filter: grayscale(80%) sepia(100%) hue-rotate(10deg) saturate(300%) contrast(1.5); }
 
 
 .blog-content {
