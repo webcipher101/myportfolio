@@ -46,71 +46,94 @@ function draw() {
 }
 setInterval(draw, 50);
 
+
 // Audio System (Web Audio API)
 let audioCtx;
 
 function initAudio() {
     if (audioCtx) return;
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    try {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    } catch(e) { return; }
     
-    // Background terminal hum/processing sound
+    // Smooth binary background sound
     function playBackgroundSound() {
-        const osc = audioCtx.createOscillator();
+        const bufferSize = audioCtx.sampleRate * 2;
+        const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+            data[i] = Math.random() * 2 - 1;
+        }
+        const noiseSource = audioCtx.createBufferSource();
+        noiseSource.buffer = buffer;
+        noiseSource.loop = true;
+
+        const biquadFilter = audioCtx.createBiquadFilter();
+        biquadFilter.type = 'lowpass';
+        biquadFilter.frequency.value = 300;
+
         const gainNode = audioCtx.createGain();
-        
-        osc.type = 'square';
-        osc.frequency.setValueAtTime(40, audioCtx.currentTime); // Low hum
-        
-        // Random frequency modulations for terminal/data processing feel
+        gainNode.gain.value = 0.003; // Very subtle smooth noise
+
+        noiseSource.connect(biquadFilter);
+        biquadFilter.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        noiseSource.start();
+
+        // Smooth data blips
         setInterval(() => {
             if(Math.random() > 0.6) {
-                osc.frequency.setTargetAtTime(40 + Math.random() * 100, audioCtx.currentTime, 0.05);
-                setTimeout(() => osc.frequency.setTargetAtTime(40, audioCtx.currentTime, 0.05), 50 + Math.random() * 100);
+                const osc = audioCtx.createOscillator();
+                const oscGain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(600 + Math.random() * 400, audioCtx.currentTime);
+                oscGain.gain.setValueAtTime(0, audioCtx.currentTime);
+                oscGain.gain.linearRampToValueAtTime(0.005, audioCtx.currentTime + 0.1);
+                oscGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.3);
+                osc.connect(oscGain);
+                oscGain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.4);
             }
-        }, 300);
-
-        gainNode.gain.value = 0.01; // Very quiet
-        
-        osc.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-        osc.start();
+        }, 1200);
     }
     
     playBackgroundSound();
 }
 
-// Click sound
+// Sci-fi Click sound
 function playClickSound() {
     if (!audioCtx) return;
     const osc = audioCtx.createOscillator();
     const gainNode = audioCtx.createGain();
     
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.1);
-    
-    gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-    
-    osc.connect(gainNode);
-    gainNode.connect(audioCtx.destination);
-    osc.start();
-    osc.stop(audioCtx.currentTime + 0.1);
-}
-
-// Hover/Typing-like tick sound
-function playHoverSound() {
-    if (!audioCtx) return;
-    const osc = audioCtx.createOscillator();
-    const gainNode = audioCtx.createGain();
-    osc.type = 'triangle';
+    osc.type = 'square';
     osc.frequency.setValueAtTime(1200, audioCtx.currentTime);
-    gainNode.gain.setValueAtTime(0.015, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.05);
+    
+    gainNode.gain.setValueAtTime(0.03, audioCtx.currentTime);
     gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+    
     osc.connect(gainNode);
     gainNode.connect(audioCtx.destination);
     osc.start();
     osc.stop(audioCtx.currentTime + 0.05);
+}
+
+// Sci-fi Typewriter sound
+function playTypewriterSound() {
+    if (!audioCtx) initAudio();
+    if (!audioCtx) return;
+    const osc = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(1500 + Math.random() * 800, audioCtx.currentTime);
+    gainNode.gain.setValueAtTime(0.015, audioCtx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.03);
+    osc.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.03);
 }
 
 // Ensure audio context starts on first user interaction
@@ -121,7 +144,7 @@ document.addEventListener('click', () => {
 
 // Bind hover sound to links
 document.querySelectorAll('a').forEach(a => {
-    a.addEventListener('mouseenter', playHoverSound);
+    a.addEventListener('mouseenter', playTypewriterSound);
 });
 document.addEventListener("DOMContentLoaded", () => {
     // Check if it's the first time the user visits in this session
@@ -152,7 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     loaderText.innerHTML += texts[textIndex].charAt(charIndex);
                     charIndex++;
                     // play typing sound slightly
-                    if (typeof playHoverSound === "function" && Math.random() > 0.5) playHoverSound();
+                    if (typeof playTypewriterSound === "function" && Math.random() > 0.5) playTypewriterSound();
                     setTimeout(typeText, 25 + Math.random() * 30);
                 } else {
                     loaderText.innerHTML += "<br><br>";
