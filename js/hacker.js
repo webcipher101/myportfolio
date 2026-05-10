@@ -123,3 +123,56 @@ document.addEventListener('click', () => {
 document.querySelectorAll('a').forEach(a => {
     a.addEventListener('mouseenter', playHoverSound);
 });
+document.addEventListener("DOMContentLoaded", () => {
+    // Check if it's the first time the user visits in this session
+    if (!sessionStorage.getItem("loaderShown")) {
+        const loader = document.createElement("div");
+        loader.id = "hacker-loader";
+        loader.innerHTML = `
+            <div class="loader-content">
+                <span id="loader-text"></span><span class="blink">_</span>
+            </div>
+        `;
+        document.body.appendChild(loader);
+
+        const texts = [
+            "INITIALIZING SYSTEM ENVIRONMENTS...",
+            "ESTABLISHING SECURE CONNECTION...",
+            "BYPASSING MAINFRAME FIREWALLS...",
+            "ACCESS GRANTED. WELCOME, USER."
+        ];
+
+        let textIndex = 0;
+        let charIndex = 0;
+        const loaderText = document.getElementById("loader-text");
+
+        function typeText() {
+            if (textIndex < texts.length) {
+                if (charIndex < texts[textIndex].length) {
+                    loaderText.innerHTML += texts[textIndex].charAt(charIndex);
+                    charIndex++;
+                    // play typing sound slightly
+                    if (typeof playHoverSound === "function" && Math.random() > 0.5) playHoverSound();
+                    setTimeout(typeText, 25 + Math.random() * 30);
+                } else {
+                    loaderText.innerHTML += "<br><br>";
+                    textIndex++;
+                    charIndex = 0;
+                    setTimeout(typeText, 400 + Math.random() * 400);
+                }
+            } else {
+                setTimeout(() => {
+                    loader.style.opacity = "0";
+                    setTimeout(() => {
+                        loader.remove();
+                        sessionStorage.setItem("loaderShown", "true");
+                        // start audio
+                        if (typeof initAudio === "function") initAudio();
+                    }, 500);
+                }, 800);
+            }
+        }
+
+        setTimeout(typeText, 500);
+    }
+});

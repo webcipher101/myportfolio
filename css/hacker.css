@@ -381,3 +381,26 @@ body.theme-cyan {
 body.theme-cyan .content-box { box-shadow: 4px 4px 0px rgba(0, 255, 255, 0.2); }
 body.theme-cyan .glitch::before { text-shadow: -1px 0 red; }
 body.theme-cyan .glitch::after { text-shadow: -1px 0 magenta; }
+#hacker-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #050505;
+    z-index: 9999999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #00ff00;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1.2rem;
+    transition: opacity 0.5s ease;
+}
+.loader-content {
+    text-align: left;
+    width: 80%;
+    max-width: 600px;
+    line-height: 1.8;
+}
