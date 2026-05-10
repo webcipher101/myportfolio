@@ -1,0 +1,383 @@
+
+:root {
+    --bg-color: #050505;
+    --text-color: #00ff00;
+    --highlight-color: #00ffff;
+    --box-bg: #111111;
+    --border-color: #333333;
+    --font-main: 'Share Tech Mono', monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-main);
+    line-height: 1.6;
+    overflow-x: hidden;
+    width: 100%;
+}
+
+/* CRT Effects */
+.crt-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 2px, 3px 100%;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.scanline {
+    width: 100%;
+    height: 100px;
+    z-index: 9998;
+    position: absolute;
+    pointer-events: none;
+    background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(255,255,255,0.2) 10%, rgba(0,0,0,0.1) 100%);
+    opacity: 0.1;
+    animation: scanline 6s linear infinite;
+}
+
+@keyframes scanline {
+    0% { transform: translateY(-100vh); }
+    100% { transform: translateY(100vh); }
+}
+
+a {
+    color: var(--highlight-color);
+    text-decoration: none;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+    word-break: break-word;
+}
+
+a:hover {
+    color: var(--text-color);
+    text-shadow: 0 0 8px var(--text-color);
+}
+
+.highlight {
+    color: var(--highlight-color);
+}
+
+.terminal-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 10;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--text-color);
+    padding-bottom: 10px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo {
+    font-size: 1.2rem;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.blink {
+    animation: blinker 1s step-start infinite;
+}
+
+@keyframes blinker {
+    50% { opacity: 0; }
+}
+
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+nav a {
+    font-size: 0.9rem;
+    padding: 5px;
+}
+
+.section {
+    margin-bottom: 40px;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    border-left: 3px solid var(--text-color);
+    padding-left: 10px;
+    word-break: break-word;
+}
+
+.content-box {
+    background-color: var(--box-bg);
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    box-shadow: 4px 4px 0px rgba(0, 255, 0, 0.2);
+    overflow-x: auto;
+}
+
+/* Hero Section */
+.hero {
+    text-align: center;
+    padding: 40px 0;
+}
+
+.glitch {
+    font-size: 3rem;
+    position: relative;
+    display: inline-block;
+    color: var(--text-color);
+    word-break: break-word;
+}
+
+.glitch::before, .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-color);
+}
+
+.glitch::before {
+    left: 2px;
+    text-shadow: -1px 0 red;
+    clip: rect(24px, 550px, 90px, 0);
+    animation: glitch-anim 2s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+    left: -2px;
+    text-shadow: -1px 0 blue;
+    clip: rect(85px, 550px, 140px, 0);
+    animation: glitch-anim 2.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+    0% { clip: rect(42px, 9999px, 44px, 0); }
+    20% { clip: rect(12px, 9999px, 59px, 0); }
+    40% { clip: rect(48px, 9999px, 29px, 0); }
+    60% { clip: rect(42px, 9999px, 73px, 0); }
+    80% { clip: rect(63px, 9999px, 27px, 0); }
+    100% { clip: rect(34px, 9999px, 41px, 0); }
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    word-break: break-word;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.social-links a {
+    font-size: 1.5rem;
+    display: inline-block;
+}
+
+/* Skills */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+}
+
+.skill-item {
+    word-break: break-all;
+}
+
+/* Timeline */
+.timeline-item {
+    margin-bottom: 25px;
+    border-left: 1px dashed var(--border-color);
+    padding-left: 15px;
+    position: relative;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 5px;
+    width: 10px;
+    height: 10px;
+    background-color: var(--text-color);
+}
+
+.date {
+    font-size: 0.8rem;
+    color: var(--highlight-color);
+    margin-bottom: 5px;
+}
+
+/* Certs */
+.certs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.cert-card {
+    border: 1px dashed var(--border-color);
+    padding: 15px;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+}
+
+.cert-card:hover {
+    border-color: var(--text-color);
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+}
+
+/* Platforms */
+.platforms-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.platform {
+    border: 1px solid var(--border-color);
+    padding: 15px;
+    text-align: center;
+}
+
+/* Contact List */
+.contact-list {
+    list-style: none;
+    margin-top: 15px;
+}
+
+.contact-list li {
+    margin-bottom: 10px;
+    word-break: break-all;
+}
+
+footer {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+    margin-top: 40px;
+}
+
+.copyright {
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 10px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+    .terminal-container {
+        padding: 10px;
+    }
+    
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    nav {
+        justify-content: flex-start;
+        width: 100%;
+    }
+    
+    .glitch {
+        font-size: 2rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+    }
+    
+    .section-title {
+        font-size: 1.2rem;
+    }
+    
+    .content-box {
+        padding: 15px;
+    }
+    
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .skill-item {
+        font-size: 0.85rem;
+    }
+}
+
+/* Color Themes */
+body.theme-red {
+    --text-color: #ff3333;
+    --highlight-color: #ffaaaa;
+}
+body.theme-red .content-box { box-shadow: 4px 4px 0px rgba(255, 51, 51, 0.2); }
+body.theme-red .glitch::before { text-shadow: -1px 0 cyan; }
+body.theme-red .glitch::after { text-shadow: -1px 0 yellow; }
+
+body.theme-yellow {
+    --text-color: #ffff00;
+    --highlight-color: #ffffaa;
+}
+body.theme-yellow .content-box { box-shadow: 4px 4px 0px rgba(255, 255, 0, 0.2); }
+body.theme-yellow .glitch::before { text-shadow: -1px 0 red; }
+body.theme-yellow .glitch::after { text-shadow: -1px 0 blue; }
+
+body.theme-blue {
+    --text-color: #33ccff;
+    --highlight-color: #aaffff;
+}
+body.theme-blue .content-box { box-shadow: 4px 4px 0px rgba(51, 204, 255, 0.2); }
+body.theme-blue .glitch::before { text-shadow: -1px 0 red; }
+body.theme-blue .glitch::after { text-shadow: -1px 0 yellow; }
+
+body.theme-purple {
+    --text-color: #ff00ff;
+    --highlight-color: #ffaaff;
+}
+body.theme-purple .content-box { box-shadow: 4px 4px 0px rgba(255, 0, 255, 0.2); }
+body.theme-purple .glitch::before { text-shadow: -1px 0 cyan; }
+body.theme-purple .glitch::after { text-shadow: -1px 0 yellow; }
+
+body.theme-orange {
+    --text-color: #ff9900;
+    --highlight-color: #ffcc88;
+}
+body.theme-orange .content-box { box-shadow: 4px 4px 0px rgba(255, 153, 0, 0.2); }
+body.theme-orange .glitch::before { text-shadow: -1px 0 blue; }
+body.theme-orange .glitch::after { text-shadow: -1px 0 green; }
+
+body.theme-cyan {
+    --text-color: #00ffff;
+    --highlight-color: #aaffff;
+}
+body.theme-cyan .content-box { box-shadow: 4px 4px 0px rgba(0, 255, 255, 0.2); }
+body.theme-cyan .glitch::before { text-shadow: -1px 0 red; }
+body.theme-cyan .glitch::after { text-shadow: -1px 0 magenta; }
