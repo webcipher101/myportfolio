@@ -404,3 +404,80 @@ body.theme-cyan .glitch::after { text-shadow: -1px 0 magenta; }
     max-width: 600px;
     line-height: 1.8;
 }
+
+/* Profile Section */
+.profile-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    margin: 40px auto;
+    text-align: left;
+    max-width: 800px;
+}
+
+.profile-image {
+    width: 180px;
+    height: 180px;
+    border: 2px solid var(--text-color);
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.4);
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.image-glitch {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    animation: identity-swap 10s infinite;
+}
+
+@keyframes identity-swap {
+    0%, 45% {
+        /* Anonymous / Hacker placeholder */
+        background-image: url('https://upload.wikimedia.org/wikipedia/commons/a/a6/Anonymous_emblem.svg'); 
+        filter: grayscale(100%) invert(1) brightness(200%);
+    }
+    46%, 48% {
+        /* Glitch transition */
+        background-image: url('./../images/myphoto.jpg');
+        filter: hue-rotate(90deg) contrast(300%) saturate(200%);
+        transform: scale(1.1) translateX(5px);
+    }
+    50%, 95% {
+        /* Real Photo */
+        background-image: url('./../images/myphoto.jpg'); 
+        filter: none;
+        transform: none;
+    }
+    96%, 98% {
+        /* Glitch transition back */
+        background-image: url('https://upload.wikimedia.org/wikipedia/commons/a/a6/Anonymous_emblem.svg');
+        filter: invert(1) hue-rotate(180deg) saturate(300%);
+        transform: scale(1.1) translateX(-5px);
+    }
+    100% {
+        background-image: url('https://upload.wikimedia.org/wikipedia/commons/a/a6/Anonymous_emblem.svg'); 
+        filter: grayscale(100%) invert(1) brightness(200%);
+    }
+}
+
+.profile-about {
+    max-width: 450px;
+}
+
+.profile-about h3 {
+    color: var(--highlight-color);
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+}
+
+@media (max-width: 600px) {
+    .profile-container {
+        flex-direction: column;
+        text-align: center;
+    }
+}
