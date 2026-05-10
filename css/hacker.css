@@ -614,3 +614,39 @@ body.theme-cyan .tool-tag { background-color: rgba(0, 255, 255, 0.1); }
     font-size: 0.85rem;
     opacity: 0.8;
 }
+
+/* Timeline Logos */
+.timeline-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 5px;
+}
+
+.company-logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    object-fit: cover;
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.1);
+}
+
+body.theme-blue .company-logo { box-shadow: 0 0 10px rgba(51, 204, 255, 0.1); }
+body.theme-red .company-logo { box-shadow: 0 0 10px rgba(255, 51, 51, 0.1); }
+body.theme-purple .company-logo { box-shadow: 0 0 10px rgba(255, 0, 255, 0.1); }
+body.theme-yellow .company-logo { box-shadow: 0 0 10px rgba(255, 255, 0, 0.1); }
+body.theme-cyan .company-logo { box-shadow: 0 0 10px rgba(0, 255, 255, 0.1); }
+body.theme-orange .company-logo { box-shadow: 0 0 10px rgba(255, 153, 0, 0.1); }
+
+@media (max-width: 600px) {
+    .timeline-header {
+        align-items: flex-start;
+    }
+    .company-logo {
+        width: 40px;
+        height: 40px;
+        margin-top: 4px;
+    }
+}
