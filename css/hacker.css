@@ -416,22 +416,46 @@ body.theme-cyan .glitch::after { text-shadow: -1px 0 magenta; }
     max-width: 800px;
 }
 
-.profile-image {
-    width: 180px;
-    height: 180px;
-    border: 2px solid var(--text-color);
+.profile-image.mac-window {
+    width: 250px;
+    height: 300px;
+    border: 1px solid var(--border-color);
     box-shadow: 0 0 15px rgba(0, 255, 0, 0.4);
-    border-radius: 50%;
+    border-radius: 8px;
+    background-color: var(--box-bg);
     overflow: hidden;
     position: relative;
     flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
 }
 
+.mac-header {
+    height: 25px;
+    background-color: #222;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    gap: 6px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.mac-btn {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+.mac-btn.close { background-color: #ff5f56; }
+.mac-btn.minimize { background-color: #ffbd2e; }
+.mac-btn.maximize { background-color: #27c93f; }
+
 .image-glitch {
+    flex-grow: 1;
     width: 100%;
-    height: 100%;
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
     background-position: center;
+    background-color: #000;
     animation: identity-swap 10s infinite;
 }
 
