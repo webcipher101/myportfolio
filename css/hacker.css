@@ -505,3 +505,50 @@ body.theme-cyan .glitch::after { text-shadow: -1px 0 magenta; }
         text-align: center;
     }
 }
+
+/* Detailed Skills Section */
+.skill-category {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px dashed var(--border-color);
+}
+.skill-category:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.skill-category h3 {
+    color: var(--highlight-color);
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+}
+.skill-desc {
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+    opacity: 0.9;
+}
+.tool-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.tool-tag {
+    background-color: rgba(0, 255, 0, 0.1);
+    border: 1px solid var(--text-color);
+    padding: 3px 8px;
+    font-size: 0.8rem;
+    border-radius: 3px;
+    color: var(--text-color);
+    transition: all 0.2s ease;
+}
+.tool-tag:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
+body.theme-yellow .tool-tag { background-color: rgba(255, 255, 0, 0.1); }
+body.theme-blue .tool-tag { background-color: rgba(51, 204, 255, 0.1); }
+body.theme-red .tool-tag { background-color: rgba(255, 51, 51, 0.1); }
+body.theme-purple .tool-tag { background-color: rgba(255, 0, 255, 0.1); }
+body.theme-orange .tool-tag { background-color: rgba(255, 153, 0, 0.1); }
+body.theme-cyan .tool-tag { background-color: rgba(0, 255, 255, 0.1); }
